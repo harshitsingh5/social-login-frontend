@@ -5,7 +5,7 @@ import FacebookLogin from "react-facebook-login";
 const FacebookSocialAuth = () => {
 
   const fbResponse = (response) => {
-    console.log(response);
+    // console.log(response);
 
     const headers = {
       'Content-Type': 'application/json',

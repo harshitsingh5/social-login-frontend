@@ -1,13 +1,17 @@
-
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import FacebookSocialAuth from './FacebookSocialAuth';
-import FbLogin from './FbLogin';
+import HomePage from './HomePage';
 
 const App = () => {
   return (
     <>
-      {/* <FbLogin/> */}
-      <FacebookSocialAuth/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={localStorage.getItem('authToken') ? <HomePage /> : <FacebookSocialAuth/> } />
+          <Route path="login" element={<FacebookSocialAuth/>} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 };

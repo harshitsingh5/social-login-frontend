@@ -15,7 +15,7 @@ const SocialAuth = () => {
     "Access-Control-Allow-Origin": "*",
   };
 
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
   // console.log("🚀 ~ file: SocialAuth.js ~ line 17 ~ SocialAuth ~ data", data)
   const [error, setError] = useState("");
 
@@ -29,7 +29,7 @@ const SocialAuth = () => {
         { headers }
       )
       .then((res) => {
-        let fbLoginResponse = res?.data?.tokens?.access;
+        let fbLoginResponse = res?.data?.tokens.access;
         if (fbLoginResponse) {
           localStorage.setItem("authToken", fbLoginResponse);
           window.location = "/";
@@ -47,9 +47,9 @@ const SocialAuth = () => {
         { headers }
       )
       .then((res) => {
-        let fbLoginResponse = res?.data?.tokens?.access;
-        if (fbLoginResponse) {
-          localStorage.setItem("authToken", fbLoginResponse);
+        let lnkdLoginResponse = res?.data.username;
+        if (lnkdLoginResponse) {
+          localStorage.setItem("authToken", lnkdLoginResponse);
           window.location = "/";
         }
       })
@@ -59,9 +59,7 @@ const SocialAuth = () => {
 
   
   // FOR GOOGLE LOGIN
-  
-  
-  
+
   const onSuccess = (res) => {
     console.log("Login Success: currentUser:", res);
     // alert(`Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`);
@@ -71,7 +69,7 @@ const SocialAuth = () => {
       .post(
         "http://localhost:8000/google",
         { auth_token: res.tokenObj.id_token },
-        { headers }
+        { headers },
         // console.log('after post', res.tokenObj.id_token)
       )
       .then((res) => {
@@ -116,14 +114,15 @@ const SocialAuth = () => {
 
         <LinkedIn
           clientId="78xx67hewmxxlr"
+          scope="r_liteprofile"
           onFailure={(errorr) => {
             setError(errorr.response.data.message);
             console.log("🚀 ~ file: SocialAuth.js ~ line 122 ~ SocialAuth ~ error", error)
           }}
-          onSuccess={(data) => {
-            setData(data?.code);
-            console.log("🚀 ~ file: SocialAuth.js ~ line 126 ~ SocialAuth ~ code", data?.code)
-            // linkedBackendApi(data?.code);
+          onSuccess={(dataa) => {
+            setData(dataa?.code);
+            console.log("🚀 ~ file: SocialAuth.js ~ line 126 ~ SocialAuth ~ code", dataa)
+            linkedBackendApi(dataa?.code);
           }}
           redirectUri="https://localhost:3000/linkedin"
         >
